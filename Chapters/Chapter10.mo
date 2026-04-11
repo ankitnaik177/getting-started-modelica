@@ -55,7 +55,7 @@ package Chapter10 "Functions, Enumerations, inner/outer, and assert"
 
   model PipeSystem "System-level model providing inner T_ambient"
     inner Modelica.Units.SI.Temperature T_ambient = 293.15 "Ambient temperature shared by all components";
-    HeatedPipe pipe;
+    HeatedPipe pipe annotation(Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -73,7 +73,7 @@ package Chapter10 "Functions, Enumerations, inner/outer, and assert"
 
     model PipeSystem_Default "Default: m_flow=0.5, Re~12700, Turbulent"
       inner Modelica.Units.SI.Temperature T_ambient = 293.15;
-      HeatedPipe pipe(m_flow = 0.5);
+      HeatedPipe pipe(m_flow = 0.5) annotation(Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -89,7 +89,7 @@ package Chapter10 "Functions, Enumerations, inner/outer, and assert"
 
     model PipeSystem_Transitional "m_flow=0.118 to trigger transitional warning"
       inner Modelica.Units.SI.Temperature T_ambient = 293.15;
-      HeatedPipe pipe(m_flow = 0.118);
+      HeatedPipe pipe(m_flow = 0.118) annotation(Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),

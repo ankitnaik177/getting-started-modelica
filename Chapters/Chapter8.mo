@@ -2,8 +2,12 @@ within Chapters;
 package Chapter8 "Inheritance and Partial Models"
 
   model Resistor "Custom resistor (base for inheritance examples)"
-    Modelica.Electrical.Analog.Interfaces.PositivePin p;
-    Modelica.Electrical.Analog.Interfaces.NegativePin n;
+    Modelica.Electrical.Analog.Interfaces.PositivePin p annotation(
+      Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Electrical.Analog.Interfaces.NegativePin n annotation(
+      Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
     Real i "Current through the resistor (A)";
     Real v "Voltage drop across the resistor (V)";
     parameter Real resistance(unit = "Ohm") = 1.0 "Resistance value";
@@ -16,8 +20,8 @@ package Chapter8 "Inheritance and Partial Models"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25),
+          Line(origin = {4.087, 0}, points = {{-97.22, 5}, {-54.087, 75}, {-19.087, -75}, {20.913, 75}, {58.567, -75}, {90.913, -5}})
         }
       )
     );
@@ -45,13 +49,25 @@ package Chapter8 "Inheritance and Partial Models"
     end ResistorWithPowerMeter;
 
     model TestResistorWithPowerMeter "Test the extended resistor"
-      ResistorWithPowerMeter resistor(resistance = 1);
-      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-      Modelica.Electrical.Analog.Basic.Ground ground;
+      ResistorWithPowerMeter resistor(resistance = 1) annotation(
+        Placement(transformation(origin = {0, 30}, extent = {{-10, -10}, {10, 10}}))
+      );
+      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+        Placement(transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90))
+      );
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(
+        Placement(transformation(origin = {0, -50}, extent = {{-10, -10}, {10, 10}}))
+      );
     equation
-      connect(constantVoltage.p, resistor.p);
-      connect(resistor.n, constantVoltage.n);
-      connect(constantVoltage.n, ground.p);
+      connect(constantVoltage.p, resistor.p) annotation(
+        Line(origin = {-30, 23.21}, points = {{-10, -13.21}, {-10, 6.79}, {20, 6.79}}, color = {0, 0, 255})
+      );
+      connect(resistor.n, constantVoltage.n) annotation(
+        Line(origin = {21.085, -14.297}, points = {{-11.085, 44.297}, {18.915, 44.297}, {18.915, -15.703}, {-21.085, -15.703}, {-21.085, -25.703}}, color = {0, 0, 255})
+      );
+      connect(constantVoltage.n, ground.p) annotation(
+        Line(origin = {-20, -27.5}, points = {{-20, 17.5}, {-20, -2.5}, {20, -2.5}, {20, -12.5}}, color = {0, 0, 255})
+      );
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -85,13 +101,25 @@ package Chapter8 "Inheritance and Partial Models"
     end ResistorWithPowerMeter2Ohm;
 
     model TestResistorWithPowerMeter2Ohm "Test the 2 Ohm variant"
-      ResistorWithPowerMeter2Ohm resistor;
-      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-      Modelica.Electrical.Analog.Basic.Ground ground;
+      ResistorWithPowerMeter2Ohm resistor annotation(
+        Placement(transformation(origin = {0, 30}, extent = {{-10, -10}, {10, 10}}))
+      );
+      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+        Placement(transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90))
+      );
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(
+        Placement(transformation(origin = {0, -50}, extent = {{-10, -10}, {10, 10}}))
+      );
     equation
-      connect(constantVoltage.p, resistor.p);
-      connect(resistor.n, constantVoltage.n);
-      connect(constantVoltage.n, ground.p);
+      connect(constantVoltage.p, resistor.p) annotation(
+        Line(origin = {-30, 23.21}, points = {{-10, -13.21}, {-10, 6.79}, {20, 6.79}}, color = {0, 0, 255})
+      );
+      connect(resistor.n, constantVoltage.n) annotation(
+        Line(origin = {21.085, -14.297}, points = {{-11.085, 44.297}, {18.915, 44.297}, {18.915, -15.703}, {-21.085, -15.703}, {-21.085, -25.703}}, color = {0, 0, 255})
+      );
+      connect(constantVoltage.n, ground.p) annotation(
+        Line(origin = {-20, -27.5}, points = {{-20, 17.5}, {-20, -2.5}, {20, -2.5}, {20, -12.5}}, color = {0, 0, 255})
+      );
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),

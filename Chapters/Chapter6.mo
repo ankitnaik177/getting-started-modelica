@@ -2,8 +2,12 @@ within Chapters;
 package Chapter6 "Arrays and For Loops"
 
   model Resistor "Custom resistor (local copy for array examples)"
-    Modelica.Electrical.Analog.Interfaces.PositivePin p;
-    Modelica.Electrical.Analog.Interfaces.NegativePin n;
+    Modelica.Electrical.Analog.Interfaces.PositivePin p annotation(
+      Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Electrical.Analog.Interfaces.NegativePin n annotation(
+      Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
     Real i "Current through the resistor (A)";
     Real v "Voltage drop across the resistor (V)";
     parameter Real resistance(unit = "Ohm") = 1.0 "Resistance value";
@@ -16,22 +20,34 @@ package Chapter6 "Arrays and For Loops"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25),
+          Line(origin = {4.087, 0}, points = {{-97.22, 5}, {-54.087, 75}, {-19.087, -75}, {20.913, 75}, {58.567, -75}, {90.913, -5}})
         }
       )
     );
   end Resistor;
 
   model TestResistorArray "Twenty resistors in series using arrays and for loops"
-    Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-    Modelica.Electrical.Analog.Basic.Ground ground;
+    Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+      Placement(transformation(origin = {-80, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90))
+    );
+    Modelica.Electrical.Analog.Basic.Ground ground annotation(
+      Placement(transformation(origin = {-20, -50}, extent = {{-10, -10}, {10, 10}}))
+    );
     parameter Integer numElements = 5 "Number of resistors in series";
-    Resistor resistors[numElements] "Array of resistor instances";
+    Resistor resistors[numElements] "Array of resistor instances" annotation(
+      Placement(transformation(origin = {-10, 40}, extent = {{-10, -10}, {10, 10}}))
+    );
   equation
-    connect(constantVoltage.p, resistors[1].p);
-    connect(resistors[numElements].n, ground.p);
-    connect(constantVoltage.n, ground.p);
+    connect(constantVoltage.p, resistors[1].p) annotation(
+      Line(origin = {-55, 28.21}, points = {{-25, -18.21}, {-25, 11.79}, {35, 11.79}}, color = {0, 0, 255})
+    );
+    connect(resistors[numElements].n, ground.p) annotation(
+      Line(origin = {5, -7.5}, points = {{5, 47.5}, {35, 47.5}, {35, -22.5}, {-25, -22.5}, {-25, -32.5}}, color = {0, 0, 255})
+    );
+    connect(constantVoltage.n, ground.p) annotation(
+      Line(origin = {-50, -27.5}, points = {{-30, 17.5}, {-30, -2.5}, {30, -2.5}, {30, -12.5}}, color = {0, 0, 255})
+    );
     for i in 1:numElements - 1 loop
       connect(resistors[i].n, resistors[i + 1].p);
     end for;
@@ -51,15 +67,27 @@ package Chapter6 "Arrays and For Loops"
   package TryThis "Try This exercises for Chapter 6"
 
     model VariableResistances "Series chain with individual resistance values"
-      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-      Modelica.Electrical.Analog.Basic.Ground ground;
+      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+        Placement(transformation(origin = {-80, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90))
+      );
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(
+        Placement(transformation(origin = {-20, -50}, extent = {{-10, -10}, {10, 10}}))
+      );
       parameter Integer numElements = 5 "Number of resistors";
       parameter Real resistanceValues[numElements] = {1, 1, 10, 1, 1} "Individual resistance values";
-      Resistor resistors[numElements](resistance = resistanceValues) "Array with per-element resistance";
+      Resistor resistors[numElements](resistance = resistanceValues) "Array with per-element resistance" annotation(
+        Placement(transformation(origin = {-10, 40}, extent = {{-10, -10}, {10, 10}}))
+      );
     equation
-      connect(constantVoltage.p, resistors[1].p);
-      connect(resistors[numElements].n, ground.p);
-      connect(constantVoltage.n, ground.p);
+      connect(constantVoltage.p, resistors[1].p) annotation(
+        Line(origin = {-55, 28.21}, points = {{-25, -18.21}, {-25, 11.79}, {35, 11.79}}, color = {0, 0, 255})
+      );
+      connect(resistors[numElements].n, ground.p) annotation(
+        Line(origin = {5, -7.5}, points = {{5, 47.5}, {35, 47.5}, {35, -22.5}, {-25, -22.5}, {-25, -32.5}}, color = {0, 0, 255})
+      );
+      connect(constantVoltage.n, ground.p) annotation(
+        Line(origin = {-50, -27.5}, points = {{-30, 17.5}, {-30, -2.5}, {30, -2.5}, {30, -12.5}}, color = {0, 0, 255})
+      );
       for i in 1:numElements - 1 loop
         connect(resistors[i].n, resistors[i + 1].p);
       end for;

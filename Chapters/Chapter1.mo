@@ -2,15 +2,23 @@ within Chapters;
 package Chapter1 "Why Modelica? - Introductory RC Circuit Example"
 
   model RC "Simple RC circuit from Chapter 1"
-    Modelica.Electrical.Analog.Basic.Resistor resistor(R = 10);
-    Modelica.Electrical.Analog.Basic.Capacitor capacitor(C = 0.001);
-    Modelica.Electrical.Analog.Basic.Ground ground;
-    Modelica.Electrical.Analog.Sources.ConstantVoltage EMF(V = 5);
+    Modelica.Electrical.Analog.Basic.Resistor resistor(R = 10) annotation(
+      Placement(transformation(origin = {0, 40}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Electrical.Analog.Basic.Capacitor capacitor(C = 0.001) annotation(
+      Placement(transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Modelica.Electrical.Analog.Basic.Ground ground annotation(
+      Placement(transformation(origin = {0, -60}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Electrical.Analog.Sources.ConstantVoltage EMF(V = 5) annotation(
+      Placement(transformation(origin = {-40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
   equation
-    connect(EMF.p, resistor.p);
-    connect(resistor.n, capacitor.p);
-    connect(capacitor.n, ground.p);
-    connect(EMF.n, ground.p);
+    connect(EMF.n, resistor.p) annotation(
+      Line(origin = {-30, 30}, points = {{-10, -20}, {-10, 10}, {20, 10}}, color = {0, 0, 255}));
+    connect(resistor.n, capacitor.p) annotation(
+      Line(origin = {30, 30}, points = {{-20, 10}, {10, 10}, {10, -20}}, color = {0, 0, 255}));
+    connect(capacitor.n, ground.p) annotation(
+      Line(origin = {20, -27.5}, points = {{20, 17.5}, {20, -12.5}, {-20, -12.5}, {-20, -22.5}}, color = {0, 0, 255}));
+    connect(EMF.p, ground.p) annotation(
+      Line(origin = {-20, -27.5}, points = {{-20, 17.5}, {-20, -12.5}, {20, -12.5}, {20, -22.5}}, color = {0, 0, 255}));
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -20,6 +28,7 @@ package Chapter1 "Why Modelica? - Introductory RC Circuit Example"
         }
       ),
       experiment(StopTime = 0.05),
+      Diagram(coordinateSystem(extent = {{-150, -90}, {150, 90}})),
       Documentation(info = "<html><p>Simple RC circuit introduced in Chapter 1 to illustrate what a Modelica model looks like. A 5V source charges a 0.001F capacitor through a 10 Ohm resistor.</p></html>")
     );
   end RC;

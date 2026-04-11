@@ -17,8 +17,8 @@ package Chapter9 "Records and Replaceable Components"
   model WindTurbine "Wind turbine model using a record for parameters"
     replaceable Turbine1 data constrainedby TurbineData "Turbine data record";
     parameter Real airDensity = 1.225 "Air density (kg/m3)";
-    Modelica.Blocks.Interfaces.RealInput v "Wind speed (m/s)";
-    Modelica.Blocks.Interfaces.RealOutput power "Generated power (W)";
+    Modelica.Blocks.Interfaces.RealInput v "Wind speed (m/s)" annotation(Placement(transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-120, 0}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Blocks.Interfaces.RealOutput power "Generated power (W)" annotation(Placement(transformation(origin = {70, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {110, 0}, extent = {{-10, -10}, {10, 10}})));
   equation
     power = 0.5 * airDensity * data.area * v ^ 3 * data.efficiency;
     annotation(
@@ -34,8 +34,8 @@ package Chapter9 "Records and Replaceable Components"
   end WindTurbine;
 
   partial model FrictionBase "Base interface for all friction models"
-    Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a;
-    Modelica.Mechanics.Rotational.Interfaces.Flange_b flange_b;
+    Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a annotation(Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Mechanics.Rotational.Interfaces.Flange_b flange_b annotation(Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Units.SI.Torque tau "Friction torque";
     Modelica.Units.SI.AngularVelocity w;
   equation
@@ -46,8 +46,7 @@ package Chapter9 "Records and Replaceable Components"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25)
         }
       ),
       Documentation(info = "<html><p>Partial model defining the interface every friction variant must satisfy. Declares connectors, angular velocity, and torque balance. Does not specify how tau is calculated.</p></html>")
@@ -61,11 +60,7 @@ package Chapter9 "Records and Replaceable Components"
     tau = -mu * sign(w);
     annotation(
       Icon(
-        coordinateSystem(extent = {{-100, -100}, {100, 100}}),
-        graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
-        }
+        coordinateSystem(extent = {{-100, -100}, {100, 100}})
       ),
       Documentation(info = "<html><p>Constant friction torque opposing motion. tau = -mu * sign(w).</p></html>")
     );
@@ -78,11 +73,7 @@ package Chapter9 "Records and Replaceable Components"
     tau = -d * w;
     annotation(
       Icon(
-        coordinateSystem(extent = {{-100, -100}, {100, 100}}),
-        graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
-        }
+        coordinateSystem(extent = {{-100, -100}, {100, 100}})
       ),
       Documentation(info = "<html><p>Friction torque proportional to velocity. tau = -d * w.</p></html>")
     );
@@ -94,31 +85,28 @@ package Chapter9 "Records and Replaceable Components"
     tau = 0;
     annotation(
       Icon(
-        coordinateSystem(extent = {{-100, -100}, {100, 100}}),
-        graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
-        }
+        coordinateSystem(extent = {{-100, -100}, {100, 100}})
       ),
       Documentation(info = "<html><p>No friction at all. tau = 0. For idealized analysis.</p></html>")
     );
   end NoFriction;
 
   model Shaft "Rotational shaft with replaceable friction"
-    Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a;
-    Modelica.Mechanics.Rotational.Interfaces.Flange_b flange_b;
-    replaceable CoulombFriction friction constrainedby FrictionBase "Replaceable friction model";
-    Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 1);
+    Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a annotation(Placement(transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, -0}, extent = {{-10, -10}, {10, 10}}))
+      );
+    Modelica.Mechanics.Rotational.Interfaces.Flange_b flange_b annotation(Placement(transformation(origin = {80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))
+      );
+    replaceable CoulombFriction friction constrainedby FrictionBase "Replaceable friction model" annotation(Placement(transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 1) annotation(Placement(transformation(origin = {-20, 0}, extent = {{-10, -10}, {10, 10}})));
   equation
-    connect(inertia.flange_a, flange_a);
-    connect(inertia.flange_b, friction.flange_a);
-    connect(friction.flange_b, flange_b);
+    connect(inertia.flange_a, flange_a) annotation(Line(origin = {-55, 0}, points = {{25, 0}, {-25, 0}}));
+    connect(inertia.flange_b, friction.flange_a) annotation(Line(origin = {10, 0}, points = {{-20, 0}, {20, 0}}));
+    connect(friction.flange_b, flange_b) annotation(Line(origin = {65, 0}, points = {{-15, 0}, {15, 0}}));
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25)
         }
       ),
       Documentation(info = "<html><p>Shaft model with a replaceable friction slot. Default is CoulombFriction. Users can redeclare to ViscousFriction, NoFriction, or any model extending FrictionBase.</p></html>")
@@ -128,12 +116,12 @@ package Chapter9 "Records and Replaceable Components"
   package TryThis "Try This exercises for Chapter 9"
 
     model TestShaft "Test the Shaft model with a torque step"
-      Shaft shaft;
-      Modelica.Mechanics.Rotational.Sources.ConstantTorque constantTorque(tau_constant = 1);
-      Modelica.Mechanics.Rotational.Components.Fixed fixed;
+      Shaft shaft annotation(Placement(transformation(origin = {10, 0}, extent = {{-10, -10}, {10, 10}})));
+      Modelica.Mechanics.Rotational.Sources.ConstantTorque constantTorque(tau_constant = 1) annotation(Placement(transformation(origin = {-50, 0}, extent = {{-10, -10}, {10, 10}})));
+      Modelica.Mechanics.Rotational.Components.Fixed fixed annotation(Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}})));
     equation
-      connect(constantTorque.flange, shaft.flange_a);
-      connect(shaft.flange_b, fixed.flange);
+      connect(constantTorque.flange, shaft.flange_a) annotation(Line(origin = {-20, 0}, points = {{-20, 0}, {20, 0}}));
+      connect(shaft.flange_b, fixed.flange) annotation(Line(origin = {35, 0}, points = {{-15, 0}, {15, 0}}));
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),

@@ -2,12 +2,17 @@ within Chapters;
 package Chapter2 "The Modelica Standard Library and Your First Model"
 
   model MyFirstModel "Heat transfer between two thermal masses"
-    Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C = 1, T(start = 283.15, fixed = true)) "Thermal mass 1 at 10 deg C";
-    Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C = 1, T(start = 293.15, fixed = true)) "Thermal mass 2 at 20 deg C";
-    Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor1(G = 1) "Conductor between the two masses";
+    Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C = 1, T(start = 283.15, fixed = true)) "Thermal mass 1 at 10 deg C" annotation(
+      Placement(transformation(origin = {-40, 40}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C = 1, T(start = 293.15, fixed = true)) "Thermal mass 2 at 20 deg C" annotation(
+      Placement(transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor1(G = 1) "Conductor between the two masses" annotation(
+      Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
   equation
-    connect(heatCapacitor1.port, thermalConductor1.port_a);
-    connect(thermalConductor1.port_b, heatCapacitor2.port);
+    connect(heatCapacitor1.port, thermalConductor1.port_a) annotation(
+      Line(origin = {-20, 15}, points = {{-20, 15}, {-20, -15}, {10, -15}}, color = {191, 0, 0}));
+    connect(thermalConductor1.port_b, heatCapacitor2.port) annotation(
+      Line(origin = {20, 15}, points = {{-10, -15}, {20, -15}, {20, 15}}, color = {191, 0, 0}));
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -17,6 +22,7 @@ package Chapter2 "The Modelica Standard Library and Your First Model"
         }
       ),
       experiment(StopTime = 10),
+      Diagram(coordinateSystem(extent = {{-150, -90}, {150, 90}})),
       Documentation(info = "<html><p>Two thermal masses (both 1 J/K) at 10 deg C and 20 deg C connected by a conductor (G=1 W/K). They equilibrate at 15 deg C.</p></html>")
     );
   end MyFirstModel;
@@ -24,12 +30,17 @@ package Chapter2 "The Modelica Standard Library and Your First Model"
   package TryThis "Try This exercises for Chapter 2"
 
     model AsymmetricCapacities "Try This: C1=1 J/K, C2=3 J/K"
-      Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C = 1, T(start = 283.15, fixed = true)) "1 J/K at 10 deg C";
-      Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C = 3, T(start = 293.15, fixed = true)) "3 J/K at 20 deg C";
-      Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor1(G = 1) "Conductor";
+      Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C = 1, T(start = 283.15, fixed = true)) "1 J/K at 10 deg C" annotation(
+        Placement(transformation(origin = {-40, 40}, extent = {{-10, -10}, {10, 10}})));
+      Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C = 3, T(start = 293.15, fixed = true)) "3 J/K at 20 deg C" annotation(
+        Placement(transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}})));
+      Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor1(G = 1) "Conductor" annotation(
+        Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
     equation
-      connect(heatCapacitor1.port, thermalConductor1.port_a);
-      connect(thermalConductor1.port_b, heatCapacitor2.port);
+      connect(heatCapacitor1.port, thermalConductor1.port_a) annotation(
+        Line(origin = {-20, 15}, points = {{-20, 15}, {-20, -15}, {10, -15}}, color = {191, 0, 0}));
+      connect(thermalConductor1.port_b, heatCapacitor2.port) annotation(
+        Line(origin = {20, 15}, points = {{-10, -15}, {20, -15}, {20, 15}}, color = {191, 0, 0}));
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -39,6 +50,7 @@ package Chapter2 "The Modelica Standard Library and Your First Model"
           }
         ),
         experiment(StopTime = 30),
+        Diagram(coordinateSystem(extent = {{-150, -90}, {150, 90}})),
         Documentation(info = "<html><p>Try This: Asymmetric capacities. C1=1 J/K at 10 deg C, C2=3 J/K at 20 deg C. Equilibrium temperature = (1*10 + 3*20)/(1+3) = 17.5 deg C.</p></html>")
       );
     end AsymmetricCapacities;

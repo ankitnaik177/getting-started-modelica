@@ -72,8 +72,12 @@ package Chapter4 "Writing Your First Textual Model"
   end HelloWorldStartFixed;
 
   block SpeedToPower "Wind speed to available power (causal block)"
-    Modelica.Blocks.Interfaces.RealInput speed;
-    Modelica.Blocks.Interfaces.RealOutput power;
+    Modelica.Blocks.Interfaces.RealInput speed annotation(
+      Placement(transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-110, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Blocks.Interfaces.RealOutput power annotation(
+      Placement(transformation(origin = {70, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {110, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
     parameter Real airDensity(unit = "kg/m3") = 1.225 "Density of air at standard conditions";
     parameter Real rotorArea(unit = "m2") = 1.0 "Swept area of the rotor blades";
   protected
@@ -85,8 +89,7 @@ package Chapter4 "Writing Your First Textual Model"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}})
         }
       ),
       Documentation(info = "<html><p>Causal block that computes available wind power from wind speed using P = 0.5 * rho * A * |v|^3. Uses the algorithm section with := assignment and a protected intermediate variable.</p></html>")
@@ -94,10 +97,16 @@ package Chapter4 "Writing Your First Textual Model"
   end SpeedToPower;
 
   model TestBlock "Test model for SpeedToPower block"
-    SpeedToPower speedToPower;
-    Modelica.Blocks.Sources.Sine sine(amplitude = 1, f = 1);
+    SpeedToPower speedToPower annotation(
+      Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Blocks.Sources.Sine sine(amplitude = 1, f = 1) annotation(
+      Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
   equation
-    connect(sine.y, speedToPower.speed);
+    connect(sine.y, speedToPower.speed) annotation(
+      Line(origin = {-35, 0}, points = {{-24, 0}, {24, 0}}, color = {0, 0, 127})
+    );
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -112,8 +121,12 @@ package Chapter4 "Writing Your First Textual Model"
   end TestBlock;
 
   model Resistor "Custom resistor with two pins and Ohm's law"
-    Modelica.Electrical.Analog.Interfaces.PositivePin p;
-    Modelica.Electrical.Analog.Interfaces.NegativePin n;
+    Modelica.Electrical.Analog.Interfaces.PositivePin p annotation(
+      Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Electrical.Analog.Interfaces.NegativePin n annotation(
+      Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
     Real i "Current through the resistor (A)";
     Real v "Voltage drop across the resistor (V)";
     parameter Real resistance(unit = "Ohm") = 1.0 "Resistance value";
@@ -126,8 +139,8 @@ package Chapter4 "Writing Your First Textual Model"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25),
+          Line(origin = {4.087, 0}, points = {{-97.22, 5}, {-54.087, 75}, {-19.087, -75}, {20.913, 75}, {58.567, -75}, {90.913, -5}})
         }
       ),
       Documentation(info = "<html><p>A resistor built from scratch. Two pins, KCL, voltage/current definitions, and Ohm's law. Four equations for the complete two-terminal component.</p></html>")
@@ -135,13 +148,25 @@ package Chapter4 "Writing Your First Textual Model"
   end Resistor;
 
   model TestResistor "Test circuit for the custom Resistor"
-    Resistor resistor(resistance = 1);
-    Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-    Modelica.Electrical.Analog.Basic.Ground ground;
+    Resistor resistor(resistance = 1) annotation(
+      Placement(transformation(origin = {0, 30}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+      Placement(transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90))
+    );
+    Modelica.Electrical.Analog.Basic.Ground ground annotation(
+      Placement(transformation(origin = {0, -50}, extent = {{-10, -10}, {10, 10}}))
+    );
   equation
-    connect(constantVoltage.p, resistor.p);
-    connect(resistor.n, constantVoltage.n);
-    connect(constantVoltage.n, ground.p);
+    connect(constantVoltage.p, resistor.p) annotation(
+      Line(origin = {-30, 23.21}, points = {{-10, -13.21}, {-10, 6.79}, {20, 6.79}}, color = {0, 0, 255})
+    );
+    connect(resistor.n, constantVoltage.n) annotation(
+      Line(origin = {-7.687, 4}, points = {{17.687, 26}, {47.687, 26}, {47.687, -34}, {-32.313, -34}, {-32.313, -14}}, color = {0, 0, 255})
+    );
+    connect(constantVoltage.n, ground.p) annotation(
+      Line(origin = {-20, -27.5}, points = {{-20, 17.5}, {-20, -2.5}, {20, -2.5}, {20, -12.5}}, color = {0, 0, 255})
+    );
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -156,9 +181,15 @@ package Chapter4 "Writing Your First Textual Model"
   end TestResistor;
 
   model ResistorWithHeat "Resistor with thermal port for heat dissipation"
-    Modelica.Electrical.Analog.Interfaces.PositivePin p;
-    Modelica.Electrical.Analog.Interfaces.NegativePin n;
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a heatPort;
+    Modelica.Electrical.Analog.Interfaces.PositivePin p annotation(
+      Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Electrical.Analog.Interfaces.NegativePin n annotation(
+      Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a heatPort annotation(
+      Placement(transformation(origin = {0, -60}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}}))
+    );
     parameter Real resistance(unit = "Ohm") = 1.0 "Resistance value";
     Real i "Current through the resistor (A)";
     Real v "Voltage drop across the resistor (V)";
@@ -172,8 +203,8 @@ package Chapter4 "Writing Your First Textual Model"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25),
+          Line(origin = {4.087, 0}, points = {{-97.22, 5}, {-54.087, 75}, {-19.087, -75}, {20.913, 75}, {58.567, -75}, {90.913, -5}})
         }
       ),
       Documentation(info = "<html><p>Multi-domain resistor: electrical behavior identical to Resistor, plus a thermal port. The coupling equation heatPort.Q_flow = -(v*i) connects electrical dissipation to heat output.</p></html>")
@@ -181,15 +212,31 @@ package Chapter4 "Writing Your First Textual Model"
   end ResistorWithHeat;
 
   model TestResistorWithHeat "Test circuit for ResistorWithHeat"
-    ResistorWithHeat resistorWithHeat(resistance = 1);
-    Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-    Modelica.Electrical.Analog.Basic.Ground ground;
-    Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor(C = 10, T(start = 293.15, fixed = true));
+    ResistorWithHeat resistorWithHeat(resistance = 1) annotation(
+      Placement(transformation(origin = {0, 30}, extent = {{-10, 10}, {10, -10}}))
+    );
+    Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+      Placement(transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = 270))
+    );
+    Modelica.Electrical.Analog.Basic.Ground ground annotation(
+      Placement(transformation(origin = {0, -50}, extent = {{-10, -10}, {10, 10}}))
+    );
+    Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor(C = 10, T(start = 293.15, fixed = true)) annotation(
+      Placement(transformation(origin = {0, 70}, extent = {{-10, -10}, {10, 10}}))
+    );
   equation
-    connect(constantVoltage.p, resistorWithHeat.p);
-    connect(resistorWithHeat.n, constantVoltage.n);
-    connect(constantVoltage.n, ground.p);
-    connect(resistorWithHeat.heatPort, heatCapacitor.port);
+    connect(constantVoltage.p, resistorWithHeat.p) annotation(
+      Line(origin = {-30, 23.21}, points = {{-10, -13.21}, {-10, 6.79}, {20, 6.79}}, color = {0, 0, 255})
+    );
+    connect(resistorWithHeat.n, constantVoltage.n) annotation(
+      Line(origin = {-8, 3.613}, points = {{18, 26.387}, {48, 26.387}, {48, -33.613}, {-32, -33.613}, {-32, -13.613}}, color = {0, 0, 255})
+    );
+    connect(constantVoltage.n, ground.p) annotation(
+      Line(origin = {-20, -27.5}, points = {{-20, 17.5}, {-20, -2.5}, {20, -2.5}, {20, -12.5}}, color = {0, 0, 255})
+    );
+    connect(resistorWithHeat.heatPort, heatCapacitor.port) annotation(
+      Line(origin = {0, 50}, points = {{0, -10}, {0, 10}}, color = {191, 0, 0})
+    );
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -206,8 +253,12 @@ package Chapter4 "Writing Your First Textual Model"
   package TryThis "Try This exercises for Chapter 4"
 
     model Capacitor "Custom capacitor built from scratch"
-      Modelica.Electrical.Analog.Interfaces.PositivePin p;
-      Modelica.Electrical.Analog.Interfaces.NegativePin n;
+      Modelica.Electrical.Analog.Interfaces.PositivePin p annotation(
+        Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}))
+      );
+      Modelica.Electrical.Analog.Interfaces.NegativePin n annotation(
+        Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))
+      );
       Real i "Current through the capacitor (A)";
       Real v "Voltage across the capacitor (V)";
       parameter Real capacitance(unit = "F") = 0.001 "Capacitance value";
@@ -229,15 +280,31 @@ package Chapter4 "Writing Your First Textual Model"
     end Capacitor;
 
     model TestRC "RC circuit using custom Resistor and Capacitor"
-      Chapter4.Resistor resistor(resistance = 1);
-      Capacitor capacitor(capacitance = 0.001);
-      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5);
-      Modelica.Electrical.Analog.Basic.Ground ground;
+      Chapter4.Resistor resistor(resistance = 1) annotation(
+        Placement(transformation(origin = {0, 40}, extent = {{-10, -10}, {10, 10}}))
+      );
+      Capacitor capacitor(capacitance = 0.001) annotation(
+        Placement(transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90))
+      );
+      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V = 5) annotation(
+        Placement(transformation(origin = {-40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -270))
+      );
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(
+        Placement(transformation(origin = {0, -60}, extent = {{-10, -10}, {10, 10}}))
+      );
     equation
-      connect(constantVoltage.p, resistor.p);
-      connect(resistor.n, capacitor.p);
-      connect(capacitor.n, ground.p);
-      connect(constantVoltage.n, ground.p);
+      connect(constantVoltage.p, resistor.p) annotation(
+        Line(origin = {-30, 30}, points = {{-10, -20}, {-10, 10}, {20, 10}}, color = {0, 0, 255})
+      );
+      connect(resistor.n, capacitor.p) annotation(
+        Line(origin = {30, 30}, points = {{-20, 10}, {10, 10}, {10, -20}}, color = {0, 0, 255})
+      );
+      connect(capacitor.n, ground.p) annotation(
+        Line(origin = {20, -27.5}, points = {{20, 17.5}, {20, -12.5}, {-20, -12.5}, {-20, -22.5}}, color = {0, 0, 255})
+      );
+      connect(constantVoltage.n, ground.p) annotation(
+        Line(origin = {-20, -27.5}, points = {{-20, 17.5}, {-20, -12.5}, {20, -12.5}, {20, -22.5}}, color = {0, 0, 255})
+      );
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),

@@ -2,8 +2,8 @@ within Chapters;
 package Chapter11 "Using Data: Tables, Lookups, and Export"
 
   block SpeedToPower "Wind speed to available power"
-    Modelica.Blocks.Interfaces.RealInput speed;
-    Modelica.Blocks.Interfaces.RealOutput power;
+    Modelica.Blocks.Interfaces.RealInput speed annotation(Placement(transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-110, 0}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Blocks.Interfaces.RealOutput power annotation(Placement(transformation(origin = {70, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {110, 0}, extent = {{-10, -10}, {10, 10}})));
     parameter Real airDensity = 1.225 "Air density (kg/m3)";
     parameter Real rotorArea = 1.0 "Swept area (m2)";
   protected
@@ -15,15 +15,14 @@ package Chapter11 "Using Data: Tables, Lookups, and Export"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}})
         }
       )
     );
   end SpeedToPower;
 
   model DataTest "CombiTimeTable feeding wind speed data"
-    SpeedToPower speedToPower;
+    SpeedToPower speedToPower annotation(Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Sources.CombiTimeTable windSource(
       table = [0, 4.0;
                3, 6.5;
@@ -34,9 +33,9 @@ package Chapter11 "Using Data: Tables, Lookups, and Export"
                18, 5.5;
                21, 3.2;
                24, 4.0],
-      timeScale = 3600) "24-hour wind speed profile";
+      timeScale = 3600) "24-hour wind speed profile" annotation(Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
   equation
-    connect(windSource.y[1], speedToPower.speed);
+    connect(windSource.y[1], speedToPower.speed) annotation(Line(origin = {-35, 0}, points = {{-24, 0}, {24, 0}}, color = {0, 0, 127}));
     annotation(
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
@@ -63,8 +62,8 @@ package Chapter11 "Using Data: Tables, Lookups, and Export"
                  18, 5.5;
                  21, 3.2;
                  24, 4.0],
-        timeScale = 3600) "24-hour wind speed profile";
-      SpeedToPower speedToPower "Compute available power from wind speed";
+        timeScale = 3600) "24-hour wind speed profile" annotation(Placement(transformation(origin = {-80, 20}, extent = {{-10, -10}, {10, 10}})));
+      SpeedToPower speedToPower "Compute available power from wind speed" annotation(Placement(transformation(origin = {0, 20}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Blocks.Tables.CombiTable1Ds efficiencyTable(
         table = [2, 0.20;
                  4, 0.45;
@@ -77,13 +76,13 @@ package Chapter11 "Using Data: Tables, Lookups, and Export"
                  18, 0.72;
                  20, 0.58;
                  22, 0.30;
-                 25, 0.00]) "Wind speed to efficiency lookup";
-      Modelica.Blocks.Math.Product product "Multiply available power by efficiency";
+                 25, 0.00]) "Wind speed to efficiency lookup" annotation(Placement(transformation(origin = {0, -20}, extent = {{-10, -10}, {10, 10}})));
+      Modelica.Blocks.Math.Product product "Multiply available power by efficiency" annotation(Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}})));
     equation
-      connect(windSource.y[1], speedToPower.speed);
-      connect(windSource.y[1], efficiencyTable.u);
-      connect(speedToPower.power, product.u1);
-      connect(efficiencyTable.y[1], product.u2);
+      connect(windSource.y[1], speedToPower.speed) annotation(Line(origin = {-40, 20}, points = {{-29, 0}, {29, 0}}, color = {0, 0, 127}));
+      connect(windSource.y[1], efficiencyTable.u) annotation(Line(origin = {-40, 0}, points = {{-29, 20}, {-20, 20}, {-20, -20}, {29, -20}}, color = {0, 0, 127}));
+      connect(speedToPower.power, product.u1) annotation(Line(origin = {30, 14}, points = {{-19, 6}, {19, -6}}, color = {0, 0, 127}));
+      connect(efficiencyTable.y[1], product.u2) annotation(Line(origin = {30, -14}, points = {{-19, -6}, {19, 6}}, color = {0, 0, 127}));
       annotation(
         Icon(
           coordinateSystem(extent = {{-100, -100}, {100, 100}}),
