@@ -4,6 +4,18 @@ package Chapter9 "Records and Replaceable Components"
   record TurbineData "Base record for wind turbine parameters"
     parameter Real area "Rotor swept area (m2)";
     parameter Real efficiency "Aerodynamic efficiency (-)";
+    annotation(
+      Icon(
+        coordinateSystem(extent = {{-100, -100}, {100, 100}}),
+        graphics = {
+          Text(textColor = {64, 64, 64}, extent = {{-150, 60}, {150, 100}}, textString = "%name"),
+          Rectangle(origin = {0, -25}, lineColor = {0, 114, 195}, fillColor = {128, 202, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -75}, {100, 75}}, radius = 10),
+          Line(points = {{-100, 0}, {100, 0}}, color = {0, 127, 255}),
+          Line(origin = {0, -50}, points = {{-100, 0}, {100, 0}}, color = {0, 127, 255}),
+          Line(origin = {0, -25}, points = {{0, 75}, {0, -75}}, color = {0, 127, 255})
+        }
+      )
+    );
   end TurbineData;
 
   record Turbine1 "First turbine variant"

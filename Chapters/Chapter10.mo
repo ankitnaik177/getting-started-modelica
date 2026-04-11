@@ -1,7 +1,16 @@
 within Chapters;
 package Chapter10 "Functions, Enumerations, inner/outer, and assert"
 
-  type FlowRegime = enumeration(Laminar, Transitional, Turbulent) "Flow regime classification";
+  type FlowRegime = enumeration(Laminar, Transitional, Turbulent) "Flow regime classification"
+    annotation(
+      Icon(
+        coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}),
+        graphics = {
+          Rectangle(lineColor = {56, 56, 56}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
+          Text(textColor = {0, 114, 195}, extent = {{-90, -50}, {90, 50}}, textString = "1..n")
+        }
+      )
+    );
 
   function ReynoldsNumber "Compute Reynolds number from flow parameters"
     input Real m_flow "Mass flow rate (kg/s)";
@@ -11,6 +20,13 @@ package Chapter10 "Functions, Enumerations, inner/outer, and assert"
   algorithm
     Re := (4 * m_flow) / (Modelica.Constants.pi * D * mu);
     annotation(
+      Icon(
+        coordinateSystem(extent = {{-100, -100}, {100, 100}}),
+        graphics = {
+          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
+          Text(origin = {0, -5}, textColor = {255, 255, 255}, extent = {{-90, -80}, {90, 80}}, textString = "f")
+        }
+      ),
       Documentation(info = "<html><p>Computes the Reynolds number for pipe flow: Re = 4*m_flow / (pi*D*mu). Used to determine flow regime.</p></html>")
     );
   end ReynoldsNumber;
