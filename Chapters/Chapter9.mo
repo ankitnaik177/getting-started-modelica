@@ -29,7 +29,7 @@ package Chapter9 "Records and Replaceable Components"
   model WindTurbine "Wind turbine model using a record for parameters"
     replaceable Turbine1 data constrainedby TurbineData "Turbine data record";
     parameter Real airDensity = 1.225 "Air density (kg/m3)";
-    Modelica.Blocks.Interfaces.RealInput v "Wind speed (m/s)" annotation(Placement(transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-120, 0}, extent = {{-10, -10}, {10, 10}})));
+    Modelica.Blocks.Interfaces.RealInput v "Wind speed (m/s)" annotation(Placement(transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-110, 0}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Interfaces.RealOutput power "Generated power (W)" annotation(Placement(transformation(origin = {70, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {110, 0}, extent = {{-10, -10}, {10, 10}})));
   equation
     power = 0.5 * airDensity * data.area * v ^ 3 * data.efficiency;
@@ -37,8 +37,7 @@ package Chapter9 "Records and Replaceable Components"
       Icon(
         coordinateSystem(extent = {{-100, -100}, {100, 100}}),
         graphics = {
-          Ellipse(lineColor = {0, 114, 195}, fillColor = {0, 114, 195}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}),
-          Polygon(lineColor = {0, 114, 195}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})
+          Rectangle(lineColor = {0, 114, 195}, extent = {{-100, -100}, {100, 100}}, radius = 25)
         }
       ),
       Documentation(info = "<html><p>Wind turbine model using a replaceable record for parameter management. The data record can be swapped between Turbine1, Turbine2, etc. without changing the model equations.</p></html>")
