@@ -98,7 +98,7 @@ package Chapter3 "Causal vs. Acausal Modeling"
       );
     end DampingVariation_Undamped;
 
-    model DampingVariation_Underdamped "d = 0.5 (underdamped)"
+    model DampingVariation_Underdamped "d = 2 (underdamped)"
       Modelica.Mechanics.Translational.Components.Fixed wall annotation(
         Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 2, s_rel0 = 0) annotation(
@@ -117,7 +117,7 @@ package Chapter3 "Causal vs. Acausal Modeling"
       );
     end DampingVariation_Underdamped;
 
-    model DampingVariation_CriticallyDamped "d = 2 (approximately critically damped)"
+    model DampingVariation_CriticallyDamped "d = 20 (approximately critically damped)"
       Modelica.Mechanics.Translational.Components.Fixed wall annotation(
         Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 20, s_rel0 = 0) annotation(
@@ -136,7 +136,7 @@ package Chapter3 "Causal vs. Acausal Modeling"
       );
     end DampingVariation_CriticallyDamped;
 
-    model DampingVariation_Overdamped "d = 5 (overdamped)"
+    model DampingVariation_Overdamped "d = 50 (overdamped)"
       Modelica.Mechanics.Translational.Components.Fixed wall annotation(
         Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 50, s_rel0 = 0) annotation(
