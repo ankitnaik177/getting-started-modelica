@@ -101,7 +101,7 @@ package Chapter3 "Causal vs. Acausal Modeling"
     model DampingVariation_Underdamped "d = 0.5 (underdamped)"
       Modelica.Mechanics.Translational.Components.Fixed wall annotation(
         Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}})));
-      Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 0.5, s_rel0 = 0) annotation(
+      Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 2, s_rel0 = 0) annotation(
         Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Mechanics.Translational.Components.Mass mass(m = 1, s(start = 0.05, fixed = true)) annotation(
         Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}})));
@@ -120,7 +120,7 @@ package Chapter3 "Causal vs. Acausal Modeling"
     model DampingVariation_CriticallyDamped "d = 2 (approximately critically damped)"
       Modelica.Mechanics.Translational.Components.Fixed wall annotation(
         Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}})));
-      Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 2, s_rel0 = 0) annotation(
+      Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 20, s_rel0 = 0) annotation(
         Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Mechanics.Translational.Components.Mass mass(m = 1, s(start = 0.05, fixed = true)) annotation(
         Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}})));
@@ -139,7 +139,7 @@ package Chapter3 "Causal vs. Acausal Modeling"
     model DampingVariation_Overdamped "d = 5 (overdamped)"
       Modelica.Mechanics.Translational.Components.Fixed wall annotation(
         Placement(transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}})));
-      Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 5, s_rel0 = 0) annotation(
+      Modelica.Mechanics.Translational.Components.SpringDamper springDamper(c = 100, d = 50, s_rel0 = 0) annotation(
         Placement(transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}})));
       Modelica.Mechanics.Translational.Components.Mass mass(m = 1, s(start = 0.05, fixed = true)) annotation(
         Placement(transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}})));
