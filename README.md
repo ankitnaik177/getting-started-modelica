@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.amazon.com/Getting-Started-Modelica-LLM-Assisted-Engineering/dp/9153181786">Buy the book on Amazon</a> (also available on your local Amazon store)
+  <a href="https://a.co/d/03DSHlFw">Buy the book on Amazon</a> (also available on your local Amazon store)
 </p>
 
 ---
